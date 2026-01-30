@@ -40,7 +40,19 @@ public class BankAccount {
 
 
     public static boolean isEmailValid(String email){
-        if (email.indexOf('@') == -1){
+        if (email.indexOf('@') == -1){ // no @ symbol
+            return false;
+        }
+        else if(email == null || email.length() == 0){ // empty string
+            return false;
+        }
+        else if (email.indexOf("@") == 0){ // missing local part
+            return false;
+        }
+        else if (email.contains("..")){ // consecutive dots
+            return false;
+        }
+        else if(email.lastIndexOf(".") < email.lastIndexOf("@")){ // no domain extension & accounts for just in case more than 1 @ symbol
             return false;
         }
         if (email == null || email.length() == 0){
