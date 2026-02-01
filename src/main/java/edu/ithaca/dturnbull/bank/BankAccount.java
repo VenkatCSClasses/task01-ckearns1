@@ -55,7 +55,8 @@ public class BankAccount {
         else if(email.lastIndexOf(".") < email.lastIndexOf("@")){ // no domain extension & accounts for just in case more than 1 @ symbol
             return false;
         }
-        if (email == null || email.length() == 0){
+        else if(email.indexOf('@') != email.lastIndexOf('@')) // multiple @ symbols
+        {
             return false;
         }
         else {

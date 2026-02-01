@@ -30,12 +30,7 @@ class BankAccountTest {
         assertFalse( BankAccount.isEmailValid("@b.com"));   // no prefix
         assertFalse( BankAccount.isEmailValid("a@b"));     // no domain
         assertFalse( BankAccount.isEmailValid("a@b..com")); // consecutive dots
-        assertFalse( BankAccount.isEmailValid("a@@b.com"));  // multiple @ symbols
-
-
-
-
-        
+        assertFalse( BankAccount.isEmailValid("a@@b.com"));  // multiple @ symbols 
     }
 
     @Test
