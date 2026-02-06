@@ -30,16 +30,15 @@ public class BankAccount {
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
     public void withdraw(double amount) throws InsufficientFundsException {
-        // check for negative withdrawal amount
-        if (amount < 0) {
-            throw new IllegalArgumentException("Withdraw amount cannot be negative");
+        if (!isAmountValid(amount)) {
+            throw new IllegalArgumentException("Invalid withdrawal amount");
         }
-        if (amount <= balance) {
-            balance -= amount;
-        } else {
+        if (amount > balance) {
             throw new InsufficientFundsException("Not enough money");
         }
+        balance -= amount;
     }
+    
 
 
     public static boolean isEmailValid(String email){
@@ -66,4 +65,23 @@ public class BankAccount {
             return true;
         }
     }
+    public static boolean isAmountValid(double amount) {
+        if (amount < 0) {
+            return false;
+        }
+        // Check if there are more than 2 decimal places
+        String text = Double.toString(Math.abs(amount));
+        int integerPlaces = text.indexOf('.');
+        int decimalPlaces = text.length() - integerPlaces - 1;
+        
+        if (text.contains(".") && decimalPlaces > 2) {
+            // Handle cases like 100.0 which toString() produces
+            if (text.endsWith("0") && decimalPlaces == 2) return true; 
+            return false;
+        }
+        return true;
 }
+}
+
+// transfrTo 
+// isAmountValid

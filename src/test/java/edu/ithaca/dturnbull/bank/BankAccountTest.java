@@ -38,6 +38,8 @@ class BankAccountTest {
         // Equivalence Class: Withdrawal of a negative amount
         // Border case: Smallest negative value (Left side of valid/invalid border)
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-0.01));
+
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(10.123));
     }
 
     @Test
@@ -69,10 +71,8 @@ class BankAccountTest {
         // Equivalence class: Multiple @ symbols
         // Not a border case
         assertFalse( BankAccount.isEmailValid("a@@b.com"));  // multiple @ symbols 
-        
-        // Missing equivalence classes/border cases:
-        // - Email with special characters in local part (e.g. "a+tag@b.com")
-        // - Domain with single letter (border case for domain length)
+
+        // period infront like a.b@gmail.com
     
     }
 
@@ -88,6 +88,22 @@ class BankAccountTest {
         
         // Equivalence class: Invalid starting balance (negative)
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -10));
+
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 10.123));
     }
+        @Test
+    void isAmountValidTest() {
+        // EC: Valid amounts (middle and border)
+        assertTrue(BankAccount.isAmountValid(100.00)); // Middle
+        assertTrue(BankAccount.isAmountValid(0.01));   // Boundary (minimum)
+    
+        // EC: Negative amounts (Invalid)
+        assertFalse(BankAccount.isAmountValid(-0.01)); // Boundary
+        assertFalse(BankAccount.isAmountValid(-100.00));
+    
+        // EC: More than 2 decimal places (Invalid)
+        assertFalse(BankAccount.isAmountValid(100.123)); // Middle
+        assertFalse(BankAccount.isAmountValid(0.001));   // Boundary
+}
 
 }
